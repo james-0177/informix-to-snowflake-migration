@@ -16,7 +16,7 @@ The project involved:
 
 The primary focus of this migration was the **Workload Report**, which is executed at different granularities (Weekly, Monthly, and Quarterly). As the reporting period expands, the complexity of the data aggregation increases significantly.
 
-### 1. [Monthly Workload Report](./migration_case_study_workload.md)
+### 1. [Monthly Workload Report](./migration_case_study_monthly_workload.md)
 
 * **Complexity:** Moderate.
 
