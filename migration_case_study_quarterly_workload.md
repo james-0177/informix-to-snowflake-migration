@@ -256,18 +256,43 @@ end
 ## 3. Modern Architecture (Snowflake SQL)
 
 ```sql
---Quarterly Information for the Workload Report--
-select Quarter_Ending, sub.Covered_Employers, sub.Completed_Audits, sub.Total_NonMon_Determinations, sub.Total_Fraud_Recov, sub.Total_NonFraud_Recov, (sub.Total_Fraud_Recov+sub.Total_NonFraud_Recov) as Total_Recovered_OP from (select a.rptdate as Quarter_Ending, sum(a.c3) as Covered_Employers, sum(a.c25b) as Completed_Audits, sum(ba.c1+ba.c13+ba.c15+bb.c1+bb.c3+bb.c5+bc.c1+bc.c3+bc.c5) as Total_NonMon_Determinations, sum(ca.c206+cb.c206+cc.c206+cd.c206+ce.c206+ca.c207+cb.c207+cc.c207+cd.c207+ce.c207+ca.c278+cd.c278+ce.c278+cd.c370+ce.c370+ce.c371+cd.c372+ce.c372+cd.c373+ce.c373) as Total_Fraud_Recov, sum(ca.c208+cb.c208+cc.c208+cd.c208+ce.c208+ca.c209+cb.c209+cc.c209+cd.c209+ce.c209+ca.c279+cd.c279+ce.c279+cd.c374+ce.c374+ce.c375+cd.c376+ce.c376+cd.c377+ce.c377) as Total_NonFraud_Recov
-from ar581 a
-inner join ar207 ba on a.rptdate = ba.rptdate
-inner join ae207 bb on a.rptdate = bb.rptdate
-inner join ap207 bc on a.rptdate = bc.rptdate
-inner join ar227 ca on a.rptdate = ca.rptdate
-inner join au227 cb on a.rptdate = cb.rptdate
-inner join ap227 cc on a.rptdate = cc.rptdate
-inner join am227 cd on a.rptdate = cd.rptdate
-inner join af227 ce on a.rptdate = ce.rptdate
-where a.rptdate between '2024-12-01' and '2025-12-31'
-group by a.rptdate
-order by a.rptdate) as sub;
+-- Quarterly Information for the Workload Report
+with Quarterly_Metrics AS (
+    select 
+        a.rptdate AS Quarter_Ending,
+        SUM(a.c3) AS Covered_Employers,
+        SUM(a.c25b) AS Completed_Audits,
+        SUM(ba.c1 + ba.c13 + ba.c15 + 
+            bb.c1 + bb.c3 + bb.c5 + 
+            bc.c1 + bc.c3 + bc.c5) AS Total_NonMon_Determinations,
+        SUM(ca.c206 + cb.c206 + cc.c206 + cd.c206 + ce.c206 + 
+            ca.c207 + cb.c207 + cc.c207 + cd.c207 + ce.c207 + 
+            ca.c278 + cd.c278 + ce.c278 + 
+            cd.c370 + ce.c370 + 
+            ce.c371 + 
+            cd.c372 + ce.c372 + 
+            cd.c373 + ce.c373) AS Total_Fraud_Recov,
+        SUM(ca.c208 + cb.c208 + cc.c208 + cd.c208 + ce.c208 + 
+            ca.c209 + cb.c209 + cc.c209 + cd.c209 + ce.c209 + 
+            ca.c279 + cd.c279 + ce.c279 + 
+            cd.c374 + ce.c374 + 
+            ce.c375 + 
+            cd.c376 + ce.c376 + 
+            cd.c377 + ce.c377) AS Total_NonFraud_Recov
+    from ar581 a
+    inner join ar207 ba on a.rptdate = ba.rptdate
+    inner join ae207 bb on a.rptdate = bb.rptdate
+    inner join ap207 bc on a.rptdate = bc.rptdate
+    inner join ar227 ca on a.rptdate = ca.rptdate
+    inner join au227 cb on a.rptdate = cb.rptdate
+    inner join ap227 cc on a.rptdate = cc.rptdate
+    inner join am227 cd on a.rptdate = cd.rptdate
+    inner join af227 ce on a.rptdate = ce.rptdate
+    where a.rptdate between '2024-12-01' and '2025-12-31'
+    group by a.rptdate
+)
+select 
+    *, (Total_Fraud_Recov + Total_NonFraud_Recov) AS Total_Recovered_OP
+from Quarterly_Metrics
+order by Quarter_Ending;
 ```
