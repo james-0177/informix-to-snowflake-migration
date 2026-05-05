@@ -1,5 +1,3 @@
-Copy the text directly from the code box below:
-
 # Data Migration Case Study: Quarterly Workload Report
 
 ## Project Overview
