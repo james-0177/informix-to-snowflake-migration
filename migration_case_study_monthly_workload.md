@@ -154,11 +154,23 @@ end
 
 ```sql
 --Monthly Benefit Appeals for the Workload Report--
-select Month_Ending, sub.UI_LA, sub.UI_HA, sub.UCFE_LA, sub.UCFE_HA, sub.UCX_LA, sub.UCX_HA, (sub.UI_LA+sub.UI_HA+sub.UCFE_LA+sub.UCFE_HA+sub.UCX_LA+sub.UCX_HA) as Total_Benefit_Appeals_Decisions from (select ar.rptdate as Month_Ending, sum(ar.c1+ae.c1+ap.c1) as UI_LA, sum(ar.c2+ae.c2+ap.c2) as UI_HA, sum(ar.c3+ae.c3+ap.c3) as UCFE_LA, sum(ar.c4+ae.c4+ap.c4) as UCFE_HA, sum(ar.c5+ae.c5+ap.c5) as UCX_LA, sum(ar.c6+ae.c6+ap.c6) as UCX_HA
+with Aggragated_Appeals AS (
+    select
+        ar.rptdate AS Month_Ending,
+        SUM(ar.c1 + ae.c1 + ap.c1) AS UI_LA, 
+        SUM(ar.c2 + ae.c2 + ap.c2) AS UI_HA, 
+        SUM(ar.c3 + ae.c3 + ap.c3) AS UCFE_LA, 
+        SUM(ar.c4 + ae.c4 + ap.c4) AS UCFE_HA, 
+        SUM(ar.c5 + ae.c5 + ap.c5) AS UCX_LA, 
+        SUM(ar.c6 + ae.c6 + ap.c6) AS UCX_HA
 from ar5130 ar
 inner join ae5130 ae on ar.rptdate = ae.rptdate
 inner join ap5130 ap on ar.rptdate = ap.rptdate
 where ar.rptdate between '2025-03-01' and '2026-03-31'
 group by ar.rptdate
-order by ar.rptdate) as sub;
+)
+select
+    *, (UI_LA + UI_HA + UCFE_LA + UCFE_HA + UCX_LA + UCX_HA) AS Total_Benefit_Appeals_Decisions
+from AGGRAGATED_APPEALS
+order by Month_Ending;
 ```
