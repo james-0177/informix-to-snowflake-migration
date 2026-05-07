@@ -261,8 +261,8 @@ with Quarterly_Metrics AS (
         SUM(a.c3) AS Covered_Employers,
         SUM(a.c25b) AS Completed_Audits,
         SUM(ba.c1 + ba.c13 + ba.c15 + bb.c1 + bb.c3 + bb.c5 + bc.c1 + bc.c3 + bc.c5) AS Total_NonMon_Determinations,
-        SUM(ca.c206 + cb.c206 + cc.c206 + cd.c206 + ce.c206 + ca.c207 + cb.c207 + cc.c207 + cd.c207 + ce.c207 + ca.c278 + cd.c278 + ce.c278 + cd.c370 + ce.c370 + ce.c371 + cd.c372 + ce.c372 +          cd.c373 + ce.c373) AS Total_Fraud_Recov,
-        SUM(ca.c208 + cb.c208 + cc.c208 + cd.c208 + ce.c208 + ca.c209 + cb.c209 + cc.c209 + cd.c209 + ce.c209 + ca.c279 + cd.c279 + ce.c279 + cd.c374 + ce.c374 + ce.c375 + cd.c376 + ce.c376 +          cd.c377 + ce.c377) AS Total_NonFraud_Recov
+        SUM(ca.c206 + cb.c206 + cc.c206 + cd.c206 + ce.c206 + ca.c207 + cb.c207 + cc.c207 + cd.c207 + ce.c207 + ca.c278 + cd.c278 + ce.c278 + cd.c370 + ce.c370 + ce.c371 + cd.c372 + ce.c372 + cd.c373 + ce.c373) AS Total_Fraud_Recov,
+        SUM(ca.c208 + cb.c208 + cc.c208 + cd.c208 + ce.c208 + ca.c209 + cb.c209 + cc.c209 + cd.c209 + ce.c209 + ca.c279 + cd.c279 + ce.c279 + cd.c374 + ce.c374 + ce.c375 + cd.c376 + ce.c376 + cd.c377 + ce.c377) AS Total_NonFraud_Recov
     from ar581 a
     inner join ar207 ba on a.rptdate = ba.rptdate
     inner join ae207 bb on a.rptdate = bb.rptdate
