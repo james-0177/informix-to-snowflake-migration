@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This repository showcases the end-to-end migration of a mission-critical reporting suite from a legacy **Informix DB** (Unix-based PuTTY/WinSCP environment) to a modern **Snowflake Cloud Data Warehouse**.
+This repository showcases the end-to-end migration of a mission-critical reporting suite from a legacy **Informix DB** to a modern **Snowflake Cloud Data Warehouse**.
 
 The project involved:
 
@@ -10,7 +10,7 @@ The project involved:
 
 2. **Data Logic Consolidation:** Translating sequential temporary table creation into high-performance, set-based SQL.
 
-3. **Architecture Modernization:** Moving from manual terminal-based execution to an automated, cloud-native data pipeline.
+3. **Architecture Modernization:** Moving from manual, menu-driven legacy execution to an automated, modern cloud data pipeline.
 
 ## The "Workload Report" Series
 
